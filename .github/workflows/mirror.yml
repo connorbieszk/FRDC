@@ -14,4 +14,4 @@ jobs:
           target_repo_url:
             git@codeberg.com:connorbieszk/FRDC.git
           ssh_private_key:                              # <-- use 'secrets' to pass credential information.
-            ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
+            ${{ secrets.CODEBERG_SSH_PRIVATE_KEY }}
