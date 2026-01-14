@@ -1,11 +1,17 @@
-on: [push]
-  ...
-      steps:
-        - uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
-        - uses: yesolutions/mirror-action@master
-          with:
-            REMOTE: 'https://codeberg.com/connorbieszk/FRDC'
-            GIT_USERNAME: connorbieszk
-            GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+name: Mirroring
+
+on: [push, delete]
+
+jobs:
+  to_codeberg:
+    runs-on: ubuntu-latest
+    steps:                                              # <-- must use actions/checkout before mirroring!
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            git@codeberg.com:connorbieszk/FRDC.git
+          ssh_private_key:                              # <-- use 'secrets' to pass credential information.
+            ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
